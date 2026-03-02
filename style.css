@@ -568,6 +568,8 @@ strong { color: var(--texto); }
   object-fit: contain;   /* ✅ NÃO CORTA */
   background: #0a0a0a;   /* ✅ preenche as laterais se sobrar */
   filter: brightness(0.95);
+object-fit: cover;
+  filter: brightness(0.85);
   transition: filter 0.5s ease;
 }
 
