@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Cantinho do Banho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body class="admin-page">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <i class="fas fa-paw"></i>
+    <span>Cantinho do Banho</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-page="dashboard">
+      <i class="fas fa-chart-pie"></i> Dashboard
+    </a>
+    <a href="#" class="nav-item" data-page="atendimentos">
+      <i class="fas fa-clipboard-list"></i> Atendimentos
+    </a>
+    <a href="#" class="nav-item" data-page="historico">
+      <i class="fas fa-history"></i> Histórico
+    </a>
+    <a href="#" class="nav-item" data-page="pagamentos">
+      <i class="fas fa-dollar-sign"></i> Pagamentos
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <i class="fas fa-user-circle"></i>
+      <div>
+        <span id="nomeUsuario">—</span>
+        <small id="cargoUsuario">—</small>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</aside>
+
+<!-- OVERLAY MOBILE -->
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- MAIN -->
+<main class="main-content">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <h2 class="page-title" id="pageTitle">Dashboard</h2>
+    <div class="topbar-right">
+      <span class="data-hoje" id="dataHoje"></span>
+    </div>
+  </header>
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <section class="page" id="page-dashboard">
+    <div class="cards-resumo">
+      <div class="card-resumo">
+        <div class="card-resumo-icon azul"><i class="fas fa-paw"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="totalAtendimentos">0</span>
+          <span class="card-resumo-label">Atendimentos</span>
+        </div>
+      </div>
+      <div class="card-resumo">
+        <div class="card-resumo-icon verde"><i class="fas fa-check-circle"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="totalPagos">R$ 0</span>
+          <span class="card-resumo-label">Faturamento Mês</span>
+        </div>
+      </div>
+      <div class="card-resumo">
+        <div class="card-resumo-icon amarelo"><i class="fas fa-clock"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="totalPendentes">0</span>
+          <span class="card-resumo-label">Pagamentos Pendentes</span>
+        </div>
+      </div>
+      <div class="card-resumo">
+        <div class="card-resumo-icon roxo"><i class="fas fa-calendar-day"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="atendimentosHoje">0</span>
+          <span class="card-resumo-label">Atendimentos Hoje</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <h4><i class="fas fa-scissors"></i> Serviços Realizados</h4>
+        <div id="grafico-servicos" class="grafico-lista"></div>
+      </div>
+      <div class="dash-card">
+        <h4><i class="fas fa-users"></i> Atendimentos por Funcionário</h4>
+        <div id="grafico-funcionarios" class="grafico-lista"></div>
+      </div>
+      <div class="dash-card full">
+        <div class="dash-card-header">
+          <h4><i class="fas fa-calendar-alt"></i> Próximos Atendimentos</h4>
+        </div>
+        <div id="proximos-atendimentos" class="tabela-wrapper"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ATENDIMENTOS ===================== -->
+  <section class="page hidden" id="page-atendimentos">
+    <div class="page-header">
+      <h3>Novo Atendimento</h3>
+      <button class="btn-primary" onclick="abrirModalAtendimento()">
+        <i class="fas fa-plus"></i> Registrar
+      </button>
+    </div>
+
+    <div class="filtros-bar">
+      <input type="text" id="busca-atendimento" placeholder="🔍 Buscar por pet ou dono..." class="input-busca" oninput="renderAtendimentos()"/>
+      <select id="filtro-status-at" class="input-select-sm" onchange="renderAtendimentos()">
+        <option value="">Todos os status</option>
+        <option value="Aguardando">Aguardando</option>
+        <option value="Em andamento">Em andamento</option>
+        <option value="Concluído">Concluído</option>
+      </select>
+    </div>
+
+    <div class="tabela-wrapper">
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th>Pet</th>
+            <th>Dono</th>
+            <th>Serviço</th>
+            <th>Funcionário</th>
+            <th>Data/Hora</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-atendimentos"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== HISTÓRICO ===================== -->
+  <section class="page hidden" id="page-historico">
+    <div class="page-header">
+      <h3>Histórico de Atendimentos</h3>
+    </div>
+
+    <div class="filtros-bar">
+      <input type="text" id="busca-historico" placeholder="🔍 Buscar por pet ou dono..." class="input-busca" oninput="renderHistorico()"/>
+      <input type="month" id="filtro-mes" class="input-select-sm" onchange="renderHistorico()"/>
+    </div>
+
+    <div id="historico-lista" class="historico-lista"></div>
+  </section>
+
+  <!-- ===================== PAGAMENTOS ===================== -->
+  <section class="page hidden" id="page-pagamentos">
+    <div class="page-header">
+      <h3>Controle de Pagamentos</h3>
+      <div class="filtro-periodo">
+        <select id="filtro-periodo-pag" class="input-select-sm" onchange="renderPagamentos()">
+          <option value="mes">Este mês</option>
+          <option value="ano">Este ano</option>
+          <option value="todos">Todos</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cards-resumo" style="margin-bottom:24px">
+      <div class="card-resumo">
+        <div class="card-resumo-icon verde"><i class="fas fa-check"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="pag-total-pago">R$ 0</span>
+          <span class="card-resumo-label">Total Pago</span>
+        </div>
+      </div>
+      <div class="card-resumo">
+        <div class="card-resumo-icon amarelo"><i class="fas fa-hourglass-half"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="pag-total-pendente">R$ 0</span>
+          <span class="card-resumo-label">Total Pendente</span>
+        </div>
+      </div>
+      <div class="card-resumo">
+        <div class="card-resumo-icon azul"><i class="fas fa-receipt"></i></div>
+        <div>
+          <span class="card-resumo-valor" id="pag-total-geral">R$ 0</span>
+          <span class="card-resumo-label">Faturamento Total</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabela-wrapper">
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th>Pet / Dono</th>
+            <th>Serviço</th>
+            <th>Valor</th>
+            <th>Forma de Pagamento</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-pagamentos"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== MODAL ATENDIMENTO ===================== -->
+<div class="modal-overlay hidden" id="modalAtendimento">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-titulo">Novo Atendimento</h3>
+      <button onclick="fecharModal()" class="btn-fechar"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nome do Dono *</label>
+          <input type="text" id="f-dono" placeholder="Nome completo" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Contato (WhatsApp) *</label>
+          <input type="text" id="f-contato" placeholder="(61) 9xxxx-xxxx" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Nome do Pet *</label>
+          <input type="text" id="f-pet" placeholder="Nome do pet" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Tipo de Pet</label>
+          <select id="f-tipo" class="form-input-admin">
+            <option value="Cachorro">Cachorro</option>
+            <option value="Gato">Gato</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Serviço *</label>
+          <select id="f-servico" class="form-input-admin">
+            <option>Banho</option>
+            <option>Tosa</option>
+            <option>Banho e Tosa</option>
+            <option>Trimming</option>
+            <option>Cronograma Capilar</option>
+            <option>Recuperação de Pelagem</option>
+            <option>Cromoterapia</option>
+            <option>Coloração Pet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Funcionário Responsável *</label>
+          <select id="f-funcionario" class="form-input-admin">
+            <option>Administrador</option>
+            <option>Ana Paula</option>
+            <option>Hegly</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Data *</label>
+          <input type="date" id="f-data" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Hora *</label>
+          <input type="time" id="f-hora" class="form-input-admin"/>
+        </div>
+        <div class="form-group full">
+          <label>Observações (alergias, preferências, cuidados)</label>
+          <textarea id="f-obs" rows="3" placeholder="Ex.: alergia a shampoo com perfume, prefere tosa curta..." class="form-input-admin"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Valor do Serviço (R$)</label>
+          <input type="number" id="f-valor" placeholder="0,00" step="0.01" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Forma de Pagamento</label>
+          <select id="f-pagamento" class="form-input-admin">
+            <option value="">Não informado</option>
+            <option>Pix</option>
+            <option>Dinheiro</option>
+            <option>Cartão de Crédito</option>
+            <option>Cartão de Débito</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status do Pagamento</label>
+          <select id="f-status-pag" class="form-input-admin">
+            <option value="Pendente">Pendente</option>
+            <option value="Pago">Pago</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status do Atendimento</label>
+          <select id="f-status-at" class="form-input-admin">
+            <option value="Aguardando">Aguardando</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Concluído">Concluído</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button onclick="fecharModal()" class="btn-secundario">Cancelar</button>
+      <button onclick="salvarAtendimento()" class="btn-primary">
+        <i class="fas fa-save"></i> Salvar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL PAGAMENTO ===================== -->
+<div class="modal-overlay hidden" id="modalPagamento">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h3>Atualizar Pagamento</h3>
+      <button onclick="fecharModalPag()" class="btn-fechar"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Valor (R$)</label>
+          <input type="number" id="pf-valor" step="0.01" class="form-input-admin"/>
+        </div>
+        <div class="form-group">
+          <label>Forma de Pagamento</label>
+          <select id="pf-forma" class="form-input-admin">
+            <option value="">Não informado</option>
+            <option>Pix</option>
+            <option>Dinheiro</option>
+            <option>Cartão de Crédito</option>
+            <option>Cartão de Débito</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Status</label>
+          <select id="pf-status" class="form-input-admin">
+            <option value="Pendente">Pendente</option>
+            <option value="Pago">Pago</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button onclick="fecharModalPag()" class="btn-secundario">Cancelar</button>
+      <button onclick="salvarPagamento()" class="btn-primary"><i class="fas fa-save"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== DADOS & ESTADO =====================
+let atendimentos = JSON.parse(localStorage.getItem('cb_atendimentos') || '[]');
+let editandoId = null;
+let editandoPagId = null;
+
+function salvarDados() {
+  localStorage.setItem('cb_atendimentos', JSON.stringify(atendimentos));
+}
+
+// ===================== AUTH =====================
+const logado = JSON.parse(localStorage.getItem('cb_logado'));
+if (!logado) window.location.href = 'login.html';
+
+document.getElementById('nomeUsuario').textContent = logado.nome;
+document.getElementById('cargoUsuario').textContent = logado.cargo === 'admin' ? 'Administrador' : 'Funcionário';
+
+function logout() {
+  localStorage.removeItem('cb_logado');
+  window.location.href = 'login.html';
+}
+
+// ===================== DATA HOJE =====================
+const hoje = new Date();
+document.getElementById('dataHoje').textContent = hoje.toLocaleDateString('pt-BR', {
+  weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+});
+
+// Preenche data/hora padrão no formulário
+document.getElementById('f-data').value = hoje.toISOString().split('T')[0];
+document.getElementById('f-hora').value = hoje.toTimeString().slice(0,5);
+
+// ===================== NAVEGAÇÃO =====================
+const navItems = document.querySelectorAll('.nav-item');
+const pages = document.querySelectorAll('.page');
+const pageTitles = {
+  dashboard: 'Dashboard',
+  atendimentos: 'Atendimentos',
+  historico: 'Histórico',
+  pagamentos: 'Pagamentos'
+};
+
+navItems.forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    const page = item.dataset.page;
+    navItems.forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    pages.forEach(p => p.classList.add('hidden'));
+    document.getElementById('page-' + page).classList.remove('hidden');
+    document.getElementById('pageTitle').textContent = pageTitles[page];
+    if (page === 'dashboard') renderDashboard();
+    if (page === 'atendimentos') renderAtendimentos();
+    if (page === 'historico') renderHistorico();
+    if (page === 'pagamentos') renderPagamentos();
+    closeSidebarMobile();
+  });
+});
+
+// ===================== SIDEBAR MOBILE =====================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('hidden');
+}
+function closeSidebarMobile() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.add('hidden');
+}
+
+// ===================== MODAL ATENDIMENTO =====================
+function abrirModalAtendimento(id = null) {
+  editandoId = id;
+  document.getElementById('modal-titulo').textContent = id ? 'Editar Atendimento' : 'Novo Atendimento';
+  if (id !== null) {
+    const a = atendimentos.find(x => x.id === id);
+    document.getElementById('f-dono').value = a.dono;
+    document.getElementById('f-contato').value = a.contato;
+    document.getElementById('f-pet').value = a.pet;
+    document.getElementById('f-tipo').value = a.tipo;
+    document.getElementById('f-servico').value = a.servico;
+    document.getElementById('f-funcionario').value = a.funcionario;
+    document.getElementById('f-data').value = a.data;
+    document.getElementById('f-hora').value = a.hora;
+    document.getElementById('f-obs').value = a.obs || '';
+    document.getElementById('f-valor').value = a.valor || '';
+    document.getElementById('f-pagamento').value = a.formaPag || '';
+    document.getElementById('f-status-pag').value = a.statusPag || 'Pendente';
+    document.getElementById('f-status-at').value = a.statusAt || 'Aguardando';
+  } else {
+    document.getElementById('f-dono').value = '';
+    document.getElementById('f-contato').value = '';
+    document.getElementById('f-pet').value = '';
+    document.getElementById('f-obs').value = '';
+    document.getElementById('f-valor').value = '';
+    document.getElementById('f-pagamento').value = '';
+    document.getElementById('f-status-pag').value = 'Pendente';
+    document.getElementById('f-status-at').value = 'Aguardando';
+  }
+  document.getElementById('modalAtendimento').classList.remove('hidden');
+}
+
+function fecharModal() {
+  document.getElementById('modalAtendimento').classList.add('hidden');
+  editandoId = null;
+}
+
+function salvarAtendimento() {
+  const dono = document.getElementById('f-dono').value.trim();
+  const pet = document.getElementById('f-pet').value.trim();
+  const servico = document.getElementById('f-servico').value;
+  if (!dono || !pet || !servico) {
+    alert('Preencha os campos obrigatórios!');
+    return;
+  }
+  const registro = {
+    id: editandoId || Date.now(),
+    dono,
+    contato: document.getElementById('f-contato').value,
+    pet,
+    tipo: document.getElementById('f-tipo').value,
+    servico,
+    funcionario: document.getElementById('f-funcionario').value,
+    data: document.getElementById('f-data').value,
+    hora: document.getElementById('f-hora').value,
+    obs: document.getElementById('f-obs').value,
+    valor: parseFloat(document.getElementById('f-valor').value) || 0,
+    formaPag: document.getElementById('f-pagamento').value,
+    statusPag: document.getElementById('f-status-pag').value,
+    statusAt: document.getElementById('f-status-at').value,
+    criadoEm: editandoId ? atendimentos.find(x=>x.id===editandoId).criadoEm : new Date().toISOString()
+  };
+  if (editandoId) {
+    const idx = atendimentos.findIndex(x => x.id === editandoId);
+    atendimentos[idx] = registro;
+  } else {
+    atendimentos.unshift(registro);
+  }
+  salvarDados();
+  fecharModal();
+  renderAtendimentos();
+}
+
+function excluirAtendimento(id) {
+  if (!confirm('Excluir este atendimento?')) return;
+  atendimentos = atendimentos.filter(x => x.id !== id);
+  salvarDados();
+  renderAtendimentos();
+  renderDashboard();
+}
+
+// ===================== MODAL PAGAMENTO =====================
+function abrirModalPagamento(id) {
+  editandoPagId = id;
+  const a = atendimentos.find(x => x.id === id);
+  document.getElementById('pf-valor').value = a.valor || '';
+  document.getElementById('pf-forma').value = a.formaPag || '';
+  document.getElementById('pf-status').value = a.statusPag || 'Pendente';
+  document.getElementById('modalPagamento').classList.remove('hidden');
+}
+
+function fecharModalPag() {
+  document.getElementById('modalPagamento').classList.add('hidden');
+  editandoPagId = null;
+}
+
+function salvarPagamento() {
+  const idx = atendimentos.findIndex(x => x.id === editandoPagId);
+  atendimentos[idx].valor = parseFloat(document.getElementById('pf-valor').value) || 0;
+  atendimentos[idx].formaPag = document.getElementById('pf-forma').value;
+  atendimentos[idx].statusPag = document.getElementById('pf-status').value;
+  salvarDados();
+  fecharModalPag();
+  renderPagamentos();
+  renderDashboard();
+}
+
+// ===================== RENDER ATENDIMENTOS =====================
+function renderAtendimentos() {
+  const busca = (document.getElementById('busca-atendimento')?.value || '').toLowerCase();
+  const filtroStatus = document.getElementById('filtro-status-at')?.value || '';
+  let lista = atendimentos.filter(a => {
+    const texto = (a.pet + a.dono + a.servico).toLowerCase();
+    return texto.includes(busca) && (filtroStatus === '' || a.statusAt === filtroStatus);
+  });
+
+  const tbody = document.getElementById('tbody-atendimentos');
+  if (!tbody) return;
+
+  if (lista.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="vazio">Nenhum atendimento encontrado.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = lista.map(a => `
+    <tr>
+      <td><strong>${a.pet}</strong><br><small>${a.tipo}</small></td>
+      <td>${a.dono}<br><small>${a.contato}</small></td>
+      <td>${a.servico}</td>
+      <td>${a.funcionario}</td>
+      <td>${formatarData(a.data)}<br><small>${a.hora}</small></td>
+      <td><span class="badge badge-${badgeAt(a.statusAt)}">${a.statusAt}</span></td>
+      <td class="acoes">
+        <button onclick="abrirModalAtendimento(${a.id})" title="Editar"><i class="fas fa-edit"></i></button>
+        <button onclick="excluirAtendimento(${a.id})" title="Excluir" class="btn-danger"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ===================== RENDER HISTÓRICO =====================
+function renderHistorico() {
+  const busca = (document.getElementById('busca-historico')?.value || '').toLowerCase();
+  const mes = document.getElementById('filtro-mes')?.value || '';
+
+  let lista = atendimentos.filter(a => {
+    const texto = (a.pet + a.dono).toLowerCase();
+    const mesMatch = mes ? a.data.startsWith(mes) : true;
+    return texto.includes(busca) && mesMatch;
+  });
+
+  const container = document.getElementById('historico-lista');
+  if (!container) return;
+
+  if (lista.length === 0) {
+    container.innerHTML = `<div class="vazio-card">Nenhum registro encontrado.</div>`;
+    return;
+  }
+
+  container.innerHTML = lista.map(a => `
+    <div class="historico-card">
+      <div class="historico-top">
+        <div>
+          <span class="hist-pet"><i class="fas fa-paw"></i> ${a.pet}</span>
+          <span class="hist-dono">${a.dono} · ${a.contato}</span>
+        </div>
+        <span class="badge badge-${badgeAt(a.statusAt)}">${a.statusAt}</span>
+      </div>
+      <div class="historico-info">
+        <span><i class="fas fa-scissors"></i> ${a.servico}</span>
+        <span><i class="fas fa-user"></i> ${a.funcionario}</span>
+        <span><i class="fas fa-calendar"></i> ${formatarData(a.data)} às ${a.hora}</span>
+        <span><i class="fas fa-dollar-sign"></i> R$ ${(a.valor||0).toFixed(2)} · ${a.formaPag||'—'} · 
+          <span class="badge badge-${badgePag(a.statusPag)}">${a.statusPag||'Pendente'}</span>
+        </span>
+      </div>
+      ${a.obs ? `<div class="historico-obs"><i class="fas fa-sticky-note"></i> ${a.obs}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ===================== RENDER PAGAMENTOS =====================
+function renderPagamentos() {
+  const periodo = document.getElementById('filtro-periodo-pag')?.value || 'mes';
+  const agora = new Date();
+  const mesMes = agora.toISOString().slice(0,7);
+  const ano = agora.getFullYear().toString();
+
+  let lista = atendimentos.filter(a => {
+    if (periodo === 'mes') return a.data.startsWith(mesMes);
+    if (periodo === 'ano') return a.data.startsWith(ano);
+    return true;
+  });
+
+  const pago = lista.filter(a => a.statusPag === 'Pago').reduce((s,a) => s + (a.valor||0), 0);
+  const pendente = lista.filter(a => a.statusPag !== 'Pago').reduce((s,a) => s + (a.valor||0), 0);
+
+  document.getElementById('pag-total-pago').textContent = `R$ ${pago.toFixed(2)}`;
+  document.getElementById('pag-total-pendente').textContent = `R$ ${pendente.toFixed(2)}`;
+  document.getElementById('pag-total-geral').textContent = `R$ ${(pago+pendente).toFixed(2)}`;
+
+  const tbody = document.getElementById('tbody-pagamentos');
+  if (!tbody) return;
+
+  if (lista.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="vazio">Nenhum registro encontrado.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = lista.map(a => `
+    <tr>
+      <td><strong>${a.pet}</strong><br><small>${a.dono}</small></td>
+      <td>${a.servico}</td>
+      <td>R$ ${(a.valor||0).toFixed(2)}</td>
+      <td>${a.formaPag || '—'}</td>
+      <td>${formatarData(a.data)}</td>
+      <td><span class="badge badge-${badgePag(a.statusPag)}">${a.statusPag||'Pendente'}</span></td>
+      <td class="acoes">
+        <button onclick="abrirModalPagamento(${a.id})" title="Editar pagamento"><i class="fas fa-edit"></i></button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ===================== RENDER DASHBOARD =====================
+function renderDashboard() {
+  const agora = new Date();
+  const mesMes = agora.toISOString().slice(0,7);
+  const hojeStr = agora.toISOString().split('T')[0];
+
+  const faturamentoMes = atendimentos
+    .filter(a => a.data.startsWith(mesMes) && a.statusPag === 'Pago')
+    .reduce((s,a) => s + (a.valor||0), 0);
+
+  const pendentes = atendimentos.filter(a => a.statusPag !== 'Pago').length;
+  const hoje = atendimentos.filter(a => a.data === hojeStr).length;
+
+  document.getElementById('totalAtendimentos').textContent = atendimentos.length;
+  document.getElementById('totalPagos').textContent = `R$ ${faturamentoMes.toFixed(2)}`;
+  document.getElementById('totalPendentes').textContent = pendentes;
+  document.getElementById('atendimentosHoje').textContent = hoje;
+
+  // Gráfico serviços
+  const contServico = {};
+  atendimentos.forEach(a => { contServico[a.servico] = (contServico[a.servico]||0)+1; });
+  const maxS = Math.max(...Object.values(contServico), 1);
+  document.getElementById('grafico-servicos').innerHTML = Object.entries(contServico)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v]) => `
+      <div class="barra-item">
+        <span class="barra-label">${k}</span>
+        <div class="barra-track"><div class="barra-fill" style="width:${(v/maxS)*100}%"></div></div>
+        <span class="barra-val">${v}</span>
+      </div>
+    `).join('') || '<p class="vazio-small">Sem dados</p>';
+
+  // Gráfico funcionários
+  const contFunc = {};
+  atendimentos.forEach(a => { contFunc[a.funcionario] = (contFunc[a.funcionario]||0)+1; });
+  const maxF = Math.max(...Object.values(contFunc), 1);
+  document.getElementById('grafico-funcionarios').innerHTML = Object.entries(contFunc)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([k,v]) => `
+      <div class="barra-item">
+        <span class="barra-label">${k}</span>
+        <div class="barra-track"><div class="barra-fill barra-verde" style="width:${(v/maxF)*100}%"></div></div>
+        <span class="barra-val">${v}</span>
+      </div>
+    `).join('') || '<p class="vazio-small">Sem dados</p>';
+
+  // Próximos atendimentos
+  const proximos = atendimentos
+    .filter(a => a.data >= hojeStr && a.statusAt !== 'Concluído')
+    .sort((a,b) => (a.data+a.hora).localeCompare(b.data+b.hora))
+    .slice(0,5);
+
+  document.getElementById('proximos-atendimentos').innerHTML = proximos.length > 0 ? `
+    <table class="tabela">
+      <thead><tr><th>Pet</th><th>Serviço</th><th>Funcionário</th><th>Data/Hora</th><th>Status</th></tr></thead>
+      <tbody>${proximos.map(a => `
+        <tr>
+          <td>${a.pet}</td>
+          <td>${a.servico}</td>
+          <td>${a.funcionario}</td>
+          <td>${formatarData(a.data)} ${a.hora}</td>
+          <td><span class="badge badge-${badgeAt(a.statusAt)}">${a.statusAt}</span></td>
+        </tr>
+      `).join('')}</tbody>
+    </table>
+  ` : '<p class="vazio-small">Nenhum atendimento agendado.</p>';
+}
+
+// ===================== HELPERS =====================
+function formatarData(d) {
+  if (!d) return '—';
+  return d.split('-').reverse().join('/');
+}
+function badgeAt(s) {
+  if (s === 'Concluído') return 'verde';
+  if (s === 'Em andamento') return 'azul';
+  return 'amarelo';
+}
+function badgePag(s) {
+  return s === 'Pago' ? 'verde' : 'amarelo';
+}
+
+// ===================== INIT =====================
+renderDashboard();
+</script>
+</body>
+</html>
