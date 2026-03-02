@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cantinho do Banho — Pet Shop Premium</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css"/>
+  <style>html { scroll-behavior: smooth; }</style>
+</head>
+<body>
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a href="https://wa.me/5561998735296?text=Quero%20agendar" target="_blank" class="whatsapp-float" aria-label="Agendar pelo WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-tooltip">Agende agora!</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <span class="brand-icon"><i class="fas fa-paw"></i></span>
+      Cantinho do Banho
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#sobre">Quem Somos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
+        <li class="nav-item"><a class="nav-link" href="#avaliacoes">Avaliações</a></li>
+        <li class="nav-item"><a class="nav-link" href="#agendamento">Agendamento</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+        <li class="nav-item"><a class="nav-link nav-admin" href="login.html" target="_self" onclick="window.location.href='login.html'; return false;">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero-premium">
+  <div class="hero-overlay"></div>
+  <div class="hero-particles">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="container hero-content text-center" data-aos="fade-up" data-aos-duration="1000">
+    <p class="hero-eyebrow">✦ Pet Shop Premium ✦</p>
+    <h1>Cuidado Premium<br><em>Para Seu Melhor Amigo</em></h1>
+    <p class="hero-subtitle">
+      Sofisticação, carinho e expertise no tratamento do seu pet.<br>Agende seu momento especial conosco.
+    </p>
+    <div class="hero-buttons">
+      <a href="#agendamento" class="btn-hero btn-hero-outline">
+        <i class="fas fa-calendar-check"></i> Agende seu Horário
+      </a>
+      <a href="#servicos" class="btn-hero btn-hero-solid">
+        <i class="fa fa-paw"></i> Conhecer serviços
+      </a>
+    </div>
+    <div class="hero-badges" data-aos="fade-up" data-aos-delay="300">
+      <div class="hero-badge"><i class="fa fa-heart"></i><span>Carinho</span></div>
+      <div class="hero-badge"><i class="fa fa-shield-alt"></i><span>Segurança</span></div>
+      <div class="hero-badge"><i class="fa fa-star"></i><span>Excelência</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span></span>
+  </div>
+</header>
+
+<!-- DIVISOR -->
+<div class="section-divider">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0a0a0a"/>
+  </svg>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre" class="section-sobre">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <p class="section-label">Nossa História</p>
+        <h2 class="section-title">Quem Somos</h2>
+        <p class="section-text">
+          No <strong>Cantinho do Banho</strong> oferecemos mais do que serviços: cuidamos com amor, carinho e dedicação total.
+          Um espaço onde cada pet é tratado como parte da família, com profissionais apaixonados e técnicas refinadas.
+        </p>
+        <div class="sobre-stats">
+          <div class="stat-item">
+            <span class="stat-num">4.6★</span>
+            <span class="stat-label">Google</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">98+</span>
+            <span class="stat-label">Avaliações</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">8</span>
+            <span class="stat-label">Serviços</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
+        <div class="sobre-card">
+          <i class="fas fa-award sobre-icon"></i>
+          <h4>Compromisso com a excelência</h4>
+          <p>Cada detalhe importa. Dos produtos utilizados ao toque final — entregamos o melhor para o seu pet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="section-servicos">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">O que oferecemos</p>
+      <h2 class="section-title">Nossos Serviços</h2>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="50">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-banho"><i class="fas fa-bath"></i></div>
+          <h5>Banho</h5>
+          <p>Cuidado e limpeza completa para seu pet.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-tosa"><i class="fas fa-cut"></i></div>
+          <h5>Tosas Especializadas</h5>
+          <p>Tosas personalizadas conforme raça e estilo.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="150">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-trimming"><i class="fas fa-dog"></i></div>
+          <h5>Trimming</h5>
+          <p>Ajustes finos para acabamento perfeito.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-pelagem"><i class="fas fa-paw"></i></div>
+          <h5>Recuperação de Pelagem</h5>
+          <p>Tratamento intensivo para pelagem danificada.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="250">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-cronograma"><i class="fas fa-stream"></i></div>
+          <h5>Cronograma Capilar</h5>
+          <p>Hidratação intensiva em ciclos personalizados.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-coloracao"><i class="fas fa-palette"></i></div>
+          <h5>Coloração</h5>
+          <p>Colorações seguras e criativas para pets!</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="350">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-cronoterapia"><i class="fas fa-spa"></i></div>
+          <h5>Cromoterapia</h5>
+          <p>Relaxamento e equilíbrio com terapia de cores.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="service-card">
+          <div class="service-icon-wrap icone-boutique"><i class="fas fa-store"></i></div>
+          <h5>Boutique Pet</h5>
+          <p>Acessórios e produtos premium para seu pet.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="section-galeria">
+  <div class="container" data-aos="fade-up">
+    <div class="text-center mb-5">
+      <p class="section-label">Momentos especiais</p>
+      <h2 class="section-title">Nossos Clientes</h2>
+    </div>
+    <div id="petCarousel" class="carousel slide carousel-premium" data-bs-ride="carousel" data-bs-interval="3500">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="imagens/pet 1.jpg" class="d-block w-100" alt="Pet 1">
+        </div>
+        <div class="carousel-item">
+          <img src="imagens/pet 2.jpg" class="d-block w-100" alt="Pet 2">
+        </div>
+        <div class="carousel-item">
+          <img src="imagens/pet 3.jpg" class="d-block w-100" alt="Pet 3">
+        </div>
+        <div class="carousel-item">
+          <img src="imagens/pet 4.jpg" class="d-block w-100" alt="Pet 4">
+        </div>
+        <div class="carousel-item">
+          <img src="imagens/pet 5.jpg" class="d-block w-100" alt="Pet 5">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#petCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#petCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+      <div class="carousel-indicators-custom">
+        <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="2"></button>
+        <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="3"></button>
+        <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="4"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" class="section-avaliacoes">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">Depoimentos</p>
+      <h2 class="section-title">O que nossos clientes dizem</h2>
+    </div>
+    <div class="row justify-content-center g-4">
+      <div class="col-md-5" data-aos="fade-right">
+        <div class="card-avaliacao">
+          <img src="imagens/avaliacao1.jpg" alt="Avaliação 1" class="img-fluid rounded">
+        </div>
+      </div>
+      <div class="col-md-5" data-aos="fade-left" data-aos-delay="100">
+        <div class="card-avaliacao">
+          <img src="imagens/avaliacao2.jpg" alt="Avaliação 2" class="img-fluid rounded">
+        </div>
+      </div>
+      <div class="col-md-5" data-aos="fade-right" data-aos-delay="150">
+        <div class="card-avaliacao">
+          <img src="imagens/avaliacao3.jpg" alt="Avaliação 3" class="img-fluid rounded">
+        </div>
+      </div>
+      <div class="col-md-5" data-aos="fade-left" data-aos-delay="200">
+        <div class="card-avaliacao">
+          <img src="imagens/avaliacao4.jpg" alt="Avaliação 4" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAMENTO -->
+<section id="agendamento" class="section-agendamento">
+  <div class="container" data-aos="fade-up">
+    <div class="text-center mb-5">
+      <p class="section-label">Reserve seu horário</p>
+      <h2 class="section-title">Agende seu Horário</h2>
+    </div>
+    <div class="agendamento-card">
+      <form onsubmit="enviarWhatsapp(); return false;">
+        <div class="row g-3">
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-user"></i>
+              <input id="nome" class="form-input" placeholder="Seu nome" required>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-paw"></i>
+              <input id="pet" class="form-input" placeholder="Nome do Pet" required>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fab fa-whatsapp"></i>
+              <input id="tel" class="form-input" placeholder="WhatsApp" required>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-dog"></i>
+              <select id="tipo-pet" class="form-input" required>
+                <option value="">Tipo de Pet</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-scissors"></i>
+              <select id="servico" class="form-input" required>
+                <option value="">Escolha o serviço</option>
+                <option>Banho e Tosa</option>
+                <option>Banho</option>
+                <option>Tosa</option>
+                <option>Trimming</option>
+                <option>Cronograma Capilar</option>
+                <option>Recuperação de Pelagem</option>
+                <option>Cromoterapia</option>
+                <option>Coloração Pet</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-calendar"></i>
+              <input id="data" type="date" class="form-input" required>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="input-group-custom">
+              <i class="fas fa-clock"></i>
+              <input id="hora" type="time" class="form-input" required>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-12">
+            <button type="submit" class="btn-agendar">
+              <i class="fa fa-paper-plane"></i> Enviar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section-contato">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <p class="section-label">Venha nos visitar</p>
+      <h2 class="section-title">Fale Conosco</h2>
+    </div>
+    <div class="row g-5 align-items-start">
+      <div class="col-md-5" data-aos="fade-right">
+        <div class="contato-info">
+
+          <div class="contato-item">
+            <div class="contato-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h5>Endereço</h5>
+              <p>Residencial Villa Mateus<br>
+              Rua 36 Sul 16, Loja 05 - Ed. Acqua Marine<br>
+              Águas Claras, Brasília - DF, 71931-360</p>
+            </div>
+          </div>
+
+          <div class="contato-item">
+            <div class="contato-icon"><i class="fab fa-instagram"></i></div>
+            <div>
+              <h5>Redes Sociais</h5>
+              <a href="https://instagram.com/cantinhodobanhodf" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i> @cantinhodobanhodf
+              </a>
+            </div>
+          </div>
+
+          <div class="contato-item">
+            <div class="contato-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <h5>WhatsApp</h5>
+              <a href="https://wa.me/5561998735296" target="_blank" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> (61) 99873-5296 — Agende seu horário
+              </a>
+            </div>
+          </div>
+
+          <div class="contato-item">
+            <div class="contato-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <h5>Horário de Funcionamento</h5>
+              <p>Seg a Sáb: <strong>08:00 – 17:00</strong><br>Domingo: <strong>Fechado</strong></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-7" data-aos="fade-left" data-aos-delay="150">
+        <div class="mapa-wrapper">
+          <p class="section-label mb-3"><i class="fas fa-map-pin me-2"></i>Como chegar</p>
+          <div class="ratio ratio-4x3">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1223.2493525552275!2d-48.03910495482226!3d-15.837038308991763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a326012396ee5%3A0x93afc04ad1eda050!2sCantinho%20do%20Banho%20Pet%20Shop!5e0!3m2!1spt-BR!2sbr!4v1702665679206!5m2!1spt-BR!2sbr"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="footer">
+  <div class="container text-center">
+    <p class="footer-brand"><i class="fas fa-paw me-2"></i>Cantinho do Banho</p>
+    <p class="footer-copy">© 2025 Cantinho do Banho — Todos os direitos reservados</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 900, once: true, easing: 'ease-out-quart', offset: 60 });
+
+  function enviarWhatsapp() {
+    const nome = document.getElementById('nome').value;
+    const pet = document.getElementById('pet').value;
+    const tel = document.getElementById('tel').value;
+    const tipoPet = document.getElementById("tipo-pet").value;
+    const servico = document.getElementById('servico').value;
+    const data = document.getElementById('data').value;
+    const hora = document.getElementById('hora').value;
+    const dataFormatada = data.split('-').reverse().join('/');
+    const msg = `✨ *Novo Agendamento — Cantinho do Banho*\n\n*Nome:* ${nome}\n*Contato:* ${tel}\n*Pet:* ${pet}\n*Tipo:* ${tipoPet}\n*Serviço:* ${servico}\n*Data:* ${dataFormatada}\n*Hora:* ${hora}\n\nAguardo a confirmação. Obrigado(a)! 🐾`;
+    const url = `https://wa.me/5561998735296?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // Navbar + botão WA no scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+    document.querySelector('.whatsapp-float').classList.toggle('visible', window.scrollY > 300);
+  });
+</script>
+</body>
+</html>
