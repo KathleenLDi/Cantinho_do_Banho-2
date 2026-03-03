@@ -1293,15 +1293,37 @@ footer.footer {
   height: auto;
   background: #0a0a0a;
 }
+/* =========================
+   CORREÇÃO MOBILE CAROUSEL
+   ========================= */
 
-@media (max-width: 576px) {
-  .carousel-premium .carousel-inner img{
-    max-height: 320px;
+@media (max-width: 768px) {
+
+  .carousel-premium .carousel-inner {
+    height: auto !important;
   }
+
+  .carousel-premium .carousel-item {
+    height: auto !important;
+  }
+
+  .carousel-premium .carousel-item img {
+    width: 100%;
+    height: auto !important;
+    max-height: 420px;
+    object-fit: contain !important;
+  }
+
 }
+@media (max-width: 768px) {
 
-@media (max-width: 480px) {
-  .carousel-premium .carousel-inner img{
-    max-height: 260px;
+  .review-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
   }
+
+  .review-carousel-wrapper {
+    padding: 0 10px;
+  }
+
 }
