@@ -1243,3 +1243,65 @@ footer.footer {
     object-fit: contain; /* NÃO corta a imagem */
     background-color: #000; /* fundo preto elegante */
 }
+/* =========================
+   FIX MOBILE (carrosséis)
+   ========================= */
+
+/* 1) AVALIAÇÕES - corrigir card cortando e alinhar no celular */
+@media (max-width: 576px) {
+  .google-rating-badge{
+    max-width: 100%;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .review-carousel-wrapper{
+    padding: 0 12px;      /* dá “respiro” nas laterais */
+    overflow: hidden;
+  }
+
+  .review-track{
+    gap: 0;
+  }
+
+  .review-card{
+    flex: 0 0 100%;       /* 1 card por vez no mobile */
+    max-width: 100%;
+    margin: 0;            /* remove margem lateral que empurra pra fora */
+    padding: 18px;
+  }
+
+  .review-header{
+    gap: 10px;
+  }
+
+  .review-text{
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+}
+/* 2) NOSSOS CLIENTES - tirar “vazio gigante” e evitar cortar */
+.carousel-premium .carousel-inner img{
+  /* O seu CSS tem object-fit repetido e acaba ficando COVER.
+     Isso aqui garante o comportamento certo. */
+  object-fit: contain !important;
+  height: auto;
+  background: #0a0a0a;
+}
+
+@media (max-width: 576px) {
+  .carousel-premium .carousel-inner img{
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-premium .carousel-inner img{
+    max-height: 260px;
+  }
+}
